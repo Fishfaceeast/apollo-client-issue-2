@@ -7,8 +7,30 @@ import App from "./App";
 
 import "./index.css";
 
+const policyForProcessorType = { // OK
+  typePolicies: {
+    ProcessorType: {
+      merge: true
+    },
+  },
+}
+const policyForPriceInfoType = { // not OK, as the parent object is non-normalized
+  typePolicies: {
+    PriceInfoType: {
+      merge: true
+    },
+  },
+}
+const policyForCoreType = { // not OK
+  typePolicies: {
+    CoreType: {
+      merge: true
+    },
+  },
+}
+
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache(policyForCoreType),
   link
 });
 

@@ -10,15 +10,31 @@ const macPro = {
   id: 1,
   name: 'Mac Pro',
   vendor: 'Apple',
-  cpu: {
-    model: 'Intel Xeon',
-    clockSpeed: 3500
+  core: {
+    cpu: {
+      priceInfo: {
+        rawPrice: 1600
+      },
+      model: 'Intel Xeon',
+      clockSpeed: 3500
+    }
   }
 }
 
+const PriceInfoType = new GraphQLObjectType({
+  name: 'PriceInfoType',
+  fields: {
+    rawPrice: {
+      type: GraphQLString,
+    }
+  }
+})
 const ProcessorType = new GraphQLObjectType({
   name: 'ProcessorType',
   fields: {
+    priceInfo: {
+      type: PriceInfoType,
+    },
     model: {
       type: GraphQLString,
     },
@@ -27,6 +43,16 @@ const ProcessorType = new GraphQLObjectType({
     }
   }
 })
+
+const CoreType = new GraphQLObjectType({
+  name: 'CoreType',
+  fields: {
+    cpu: {
+      type: ProcessorType,
+    }
+  }
+}) 
+
 
 const ComputerType = new GraphQLObjectType({
   name: 'ComputerType',
@@ -37,8 +63,8 @@ const ComputerType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
     },
-    cpu: {
-      type: ProcessorType,
+    core: {
+      type: CoreType,
     }
   }
 })
